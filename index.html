@@ -29,31 +29,10 @@
             <a class="navbar-brand" href="#">
                 <img src="img/f778d689-f387-4270-be12-450acbae8446-removebg-preview.png" alt="Logo" class="img-fluid">
             </a>
-            <!-- Mobile menu toggle button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Navbar links -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
 
-    <div class="container mt-5">
+<div class="container mt-5">
         <h1 class="mb-4">Administração de Aluguéis e Vendas</h1>
 
         <form id="aluguelForm" class="mb-4">
@@ -118,93 +97,9 @@
             <tbody>
             </tbody>
         </table>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        let alugueis = [];
-
-        function adicionarAluguel() {
-            let tipo = document.getElementById('tipoImovel').value;
-            let endereco = document.getElementById('enderecoImovel').value;
-            let precoAluguel = parseFloat(document.getElementById('precoAluguel').value);
-            let disponivel = document.getElementById('disponivelImovel').checked;
-            let dataVencimento = document.getElementById('dataVencimento').value;
-            let dataPagamento = document.getElementById('dataPagamento').value;
-            let locatario = document.getElementById('locatario').value;
-            let donoImovel = document.getElementById('donoImovel').value;
-
-            let novoAluguel = {
-                tipo: tipo,
-                endereco: endereco,
-                precoAluguel: precoAluguel,
-                disponivel: disponivel,
-                dataVencimento: dataVencimento,
-                dataPagamento: dataPagamento,
-                locatario: locatario,
-                donoImovel: donoImovel
-            };
-
-            alugueis.push(novoAluguel);
-            exibirAlugueis();
-            limparFormulario();
-        }
-
-        function exibirAlugueis() {
-            let tableBody = document.getElementById('alugueisTable').getElementsByTagName('tbody')[0];
-            tableBody.innerHTML = '';
-
-            alugueis.forEach((aluguel, index) => {
-                let row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td>${aluguel.tipo}</td>
-                    <td>${aluguel.endereco}</td>
-                    <td>${aluguel.precoAluguel}</td>
-                    <td>${aluguel.disponivel ? 'Sim' : 'Não'}</td>
-                    <td>${aluguel.dataVencimento}</td>
-                    <td>${aluguel.dataPagamento}</td>
-                    <td>${aluguel.locatario}</td>
-                    <td>${aluguel.donoImovel}</td>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="editarAluguel(${index})">Editar</button>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="excluirAluguel(${index})">Excluir</button>
-                    </td>
-                `;
-            });
-        }
-
-        function limparFormulario() {
-            document.getElementById('tipoImovel').value = 'Aluguel';
-            document.getElementById('enderecoImovel').value = '';
-            document.getElementById('precoAluguel').value = '';
-            document.getElementById('disponivelImovel').checked = false;
-            document.getElementById('dataVencimento').value = '';
-            document.getElementById('dataPagamento').value = '';
-            document.getElementById('locatario').value = '';
-            document.getElementById('donoImovel').value = '';
-        }
-
-        function editarAluguel(index) {
-            let aluguel = alugueis[index];
-            document.getElementById('tipoImovel').value = aluguel.tipo;
-            document.getElementById('enderecoImovel').value = aluguel.endereco;
-            document.getElementById('precoAluguel').value = aluguel.precoAluguel;
-            document.getElementById('disponivelImovel').checked = aluguel.disponivel;
-            document.getElementById('dataVencimento').value = aluguel.dataVencimento;
-            document.getElementById('dataPagamento').value = aluguel.dataPagamento;
-            document.getElementById('locatario').value = aluguel.locatario;
-            document.getElementById('donoImovel').value = aluguel.donoImovel;
-
-            alugueis.splice(index, 1);
-            exibirAlugueis();
-        }
-
-        function excluirAluguel(index) {
-            alugueis.splice(index, 1);
-            exibirAlugueis();
-        }
-
-        exibirAlugueis();
-    </script>
+    <script>scr="calculo.js"</script>
 </body>
 </html>
+
