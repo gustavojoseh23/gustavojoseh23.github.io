@@ -7,23 +7,41 @@
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
-    .navbar-custom{
-        background-color: #fd7a00ce;
+    .navbar-custom {
+        background-color: #bd6b00; 
     }
-
     .navbar-brand img {
         max-width: 130px; 
         height: auto; 
     }
 
     body {
-        background-color: #0329ff6e;
+        background-color: #0158aa91;
+        padding-top: 60px; /* Adicionar espaço para a barra de navegação */
     }
-    
+
+    .form-label {
+        font-size: 14px;
+    }
+
+    .form-control {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .btn {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+
 </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light  navbar-custom">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top"> <!-- Fixar barra de navegação no topo -->
         <div class="container-fluid">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
@@ -32,55 +50,57 @@
         </div>
     </nav>
 
-<div class="container mt-5">
+    <div class="container mt-5">
         <h1 class="mb-4">Administração de Aluguéis e Vendas</h1>
 
         <form id="aluguelForm" class="mb-4">
             <div class="row mb-3">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="tipoImovel" class="form-label">Tipo de Imóvel:</label>
                     <select id="tipoImovel" class="form-select" required>
                         <option value="Aluguel">Aluguel</option>
                         <option value="Venda">Venda</option>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="enderecoImovel" class="form-label">Endereço:</label>
                     <input type="text" id="enderecoImovel" class="form-control" required>
                 </div>
-                <div class="col-md-4">
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
                     <label for="precoAluguel" class="form-label">Preço do Aluguel:</label>
                     <input type="number" id="precoAluguel" class="form-control" required>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <label for="disponivelImovel" class="form-check-label">Disponível:</label>
-                    <input type="checkbox" id="disponivelImovel" class="form-check-input">
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="dataVencimento" class="form-label">Data de Vencimento:</label>
                     <input type="date" id="dataVencimento" class="form-control" required>
                 </div>
-                <div class="col-md-4">
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
                     <label for="dataPagamento" class="form-label">Data do Pagamento:</label>
                     <input type="date" id="dataPagamento" class="form-control" required>
                 </div>
-            </div>
-            <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="locatario" class="form-label">Locatário:</label>
                     <input type="text" id="locatario" class="form-control" required>
                 </div>
+            </div>
+            <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="donoImovel" class="form-label">Dono do Imóvel:</label>
                     <input type="text" id="donoImovel" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="disponivelImovel" class="form-check-label">Disponível:</label>
+                    <input type="checkbox" id="disponivelImovel" class="form-check-input">
                 </div>
             </div>
             <button type="button" class="btn btn-primary" onclick="adicionarAluguel()">Adicionar Aluguel</button>
         </form>
 
-        <div class="table-responsive">
+        <div class="table-responsive"> <!-- Tornar a tabela responsiva -->
             <table id="alugueisTable" class="table">
                 <thead>
                     <tr>
@@ -102,6 +122,91 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>scr="calculo.js"</script>
+    <script>
+        // Seu código JavaScript aqui
+        let alugueis = [];
+
+function adicionarAluguel() {
+    let tipo = document.getElementById('tipoImovel').value;
+    let endereco = document.getElementById('enderecoImovel').value;
+    let precoAluguel = parseFloat(document.getElementById('precoAluguel').value);
+    let disponivel = document.getElementById('disponivelImovel').checked;
+    let dataVencimento = document.getElementById('dataVencimento').value;
+    let dataPagamento = document.getElementById('dataPagamento').value;
+    let locatario = document.getElementById('locatario').value;
+    let donoImovel = document.getElementById('donoImovel').value;
+
+    let novoAluguel = {
+        tipo: tipo,
+        endereco: endereco,
+        precoAluguel: precoAluguel,
+        disponivel: disponivel,
+        dataVencimento: dataVencimento,
+        dataPagamento: dataPagamento,
+        locatario: locatario,
+        donoImovel: donoImovel
+    };
+
+    alugueis.push(novoAluguel);
+    exibirAlugueis();
+    limparFormulario();
+}
+
+function exibirAlugueis() {
+    let tableBody = document.getElementById('alugueisTable').getElementsByTagName('tbody')[0];
+    tableBody.innerHTML = '';
+
+    alugueis.forEach((aluguel, index) => {
+        let row = tableBody.insertRow();
+        row.innerHTML = `
+            <td>${aluguel.tipo}</td>
+            <td>${aluguel.endereco}</td>
+            <td>${aluguel.precoAluguel}</td>
+            <td>${aluguel.disponivel ? 'Sim' : 'Não'}</td>
+            <td>${aluguel.dataVencimento}</td>
+            <td>${aluguel.dataPagamento}</td>
+            <td>${aluguel.locatario}</td>
+            <td>${aluguel.donoImovel}</td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm" onclick="editarAluguel(${index})">Editar</button>
+                <button type="button" class="btn btn-danger btn-sm" onclick="excluirAluguel(${index})">Excluir</button>
+            </td>
+        `;
+    });
+}
+
+function limparFormulario() {
+    document.getElementById('tipoImovel').value = 'Aluguel';
+    document.getElementById('enderecoImovel').value = '';
+    document.getElementById('precoAluguel').value = '';
+    document.getElementById('disponivelImovel').checked = false;
+    document.getElementById('dataVencimento').value = '';
+    document.getElementById('dataPagamento').value = '';
+    document.getElementById('locatario').value = '';
+    document.getElementById('donoImovel').value = '';
+}
+
+function editarAluguel(index) {
+    let aluguel = alugueis[index];
+    document.getElementById('tipoImovel').value = aluguel.tipo;
+    document.getElementById('enderecoImovel').value = aluguel.endereco;
+    document.getElementById('precoAluguel').value = aluguel.precoAluguel;
+    document.getElementById('disponivelImovel').checked = aluguel.disponivel;
+    document.getElementById('dataVencimento').value = aluguel.dataVencimento;
+    document.getElementById('dataPagamento').value = aluguel.dataPagamento;
+    document.getElementById('locatario').value = aluguel.locatario;
+    document.getElementById('donoImovel').value = aluguel.donoImovel;
+
+    alugueis.splice(index, 1);
+    exibirAlugueis();
+}
+
+function excluirAluguel(index) {
+    alugueis.splice(index, 1);
+    exibirAlugueis();
+}
+
+exibirAlugueis();
+    </script>
 </body>
 </html>
